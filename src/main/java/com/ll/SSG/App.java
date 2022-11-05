@@ -16,7 +16,7 @@ public class App {
 
         outer:
         while (true) {
-            System.out.println("Command Example : '종료', '등록', '삭제', '찾기', '목록'");
+            System.out.println("Command Example : '종료', '등록', '삭제', '찾기', '목록', '수정'");
             System.out.print("Please enter a command  : ");
 
             String cmd = br.readLine();
@@ -39,12 +39,49 @@ public class App {
                     delete(rq, cmd);
                     continue;
 
+                case "수정":
+                    modify(rq, cmd);
+                    continue;
+
                 case "종료":
                     break outer;
             }
         }
 
         br.close();
+    }
+
+    private void modify(Rq rq, String cmd) throws IOException {
+        int wiseSayId;
+
+        if(cmd.equals("수정")) {
+            System.out.print("수정할 명언의 ID를 입력해주세요. : ");
+            wiseSayId = Integer.parseInt(br.readLine().trim());
+        } else {
+            wiseSayId = rq.getIntParam("id", 0);
+        }
+
+        if(wiseSayId == 0) {
+            System.out.println("정확한 명언 ID를 입력해주세요.");
+            return;
+        }
+
+        WiseSay wiseSay = rq.findById(wiseSayId, wiseSays);
+
+        if(wiseSay == null) {
+            System.out.println("해당 ID의 명언이 존재하지 않습니다.");
+            return;
+        }
+
+        System.out.printf("기존 명언 : %s\n", wiseSay.content);
+        System.out.print("변경 명언 : ");
+        wiseSay.content = br.readLine().trim();
+
+        System.out.printf("기존 작가 : %s\n", wiseSay.author);
+        System.out.print("변경 작가 : ");
+        wiseSay.author = br.readLine().trim();
+
+        System.out.printf("%d번 명언이 수정되었습니다.", wiseSayId);
     }
 
     private void getWiseSayById(Rq rq, String cmd) throws IOException {
