@@ -5,19 +5,15 @@ import java.util.List;
 
 public class WiseSayService {
     List<WiseSay> wiseSays = new ArrayList<>();
+    WiseSayRepository wiseSayRepository = new WiseSayRepository(wiseSays);
     int id = 0;
 
     public List<WiseSay> findAll() {
-        return wiseSays;
+        return wiseSayRepository.findAll();
     }
 
     public WiseSay findById(int id) {
-        for(WiseSay wiseSay : wiseSays) {
-            if(wiseSay.id == id) {
-                return wiseSay;
-            }
-        }
-        return null;
+        return wiseSayRepository.findById(id);
     }
 
     public WiseSay write(String content, String author) {
