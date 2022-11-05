@@ -26,7 +26,7 @@ public class WiseSayTable {
         Util.file.saveToFile("%s/wise_say/last_id.txt".formatted(baseDir), id + "");
     }
 
-    private int getLastId() {
+    public  int getLastId() {
         String lastId = Util.file.readFromFile("%s/wise_say/last_id.txt".formatted(baseDir), "");
 
         if (lastId.isEmpty()) {
