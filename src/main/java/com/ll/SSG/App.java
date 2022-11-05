@@ -101,7 +101,7 @@ public class App {
 
         wiseSays.remove(wiseSay_);
 
-        System.out.printf("%d번 명언이 삭제되었습니다.", deleteId);
+        System.out.printf("%d번 명언이 삭제되었습니다.\n", deleteId);
     }
 
     private void write(Rq rq) throws IOException {
