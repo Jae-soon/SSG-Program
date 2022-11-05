@@ -1,7 +1,9 @@
 package com.ll.SSG;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WiseSayTable {
     private String baseDir;
@@ -53,5 +55,27 @@ public class WiseSayTable {
         }
 
         return new WiseSay((int) map.get("id"), (String) map.get("content"), (String) map.get("author"));
+    }
+
+    public List<WiseSay> findAll() {
+        List<Integer> fileIds = getFileIds();
+
+        return fileIds
+                .stream()
+                .map(id -> findById(id))
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getFileIds() {
+        String path = "%s/wise_say".formatted(baseDir);
+        List<String> fileNames = Util.file.getFileNamesFromDir(path);
+
+        return fileNames
+                .stream()
+                .filter(fileName -> !fileName.equals("last_id.txt"))
+                .map(fileName -> fileName.replace(".json", ""))
+                .mapToInt(Integer::parseInt)
+                .boxed()
+                .collect(Collectors.toList());
     }
 }
