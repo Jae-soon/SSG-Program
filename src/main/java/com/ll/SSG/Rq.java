@@ -54,13 +54,4 @@ public class Rq {
     public String getCmd() {
         return cmd;
     }
-
-    public WiseSay findById(int id, List<WiseSay> wiseSays) {
-        for(WiseSay wiseSay : wiseSays) {
-            if(wiseSay.id == id) {
-                return wiseSay;
-            }
-        }
-        return null;
-    }
 }
