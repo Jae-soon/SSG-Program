@@ -19,4 +19,15 @@ public class WiseSay {
                 명언 = %s
                 작가명 = %s""".formatted(id, content, author);
     }
+
+
+    public String toJson() {
+        return """
+                {
+                    "id": %d,
+                    "content": "%s",
+                    "author": "%s"
+                }
+                """.stripIndent().formatted(id, content, author);
+    }
 }
