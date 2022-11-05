@@ -16,13 +16,17 @@ public class App {
 
         outer:
         while (true) {
-            System.out.println("Command Example : '종료', '등록'");
+            System.out.println("Command Example : '종료', '등록', '삭제', '찾기', '목록'");
             System.out.print("Please enter a command  : ");
 
             String cmd = br.readLine();
             Rq rq = new Rq(cmd);
 
             switch(rq.getCmd()) {
+                case "찾기":
+                    getWiseSayById(rq, cmd);
+                    continue;
+
                 case "등록":
                     write(rq);
                     continue;
@@ -43,10 +47,35 @@ public class App {
         br.close();
     }
 
+    private void getWiseSayById(Rq rq, String cmd) throws IOException {
+        int wiseSayId;
+
+        if(cmd.equals("찾기")) {
+            System.out.print("찾을 명언의 ID를 입력해주세요. : ");
+            wiseSayId = Integer.parseInt(br.readLine().trim());
+        } else {
+            wiseSayId = rq.getIntParam("id", 0);
+        }
+
+        if(wiseSayId == 0) {
+            System.out.println("정확한 명언 ID를 입력해주세요.");
+            return;
+        }
+
+        WiseSay wiseSay = rq.findById(wiseSayId, wiseSays);
+
+        if(wiseSay == null) {
+            System.out.println("해당 ID의 명언이 존재하지 않습니다.");
+            return;
+        }
+
+        System.out.println(wiseSay);
+    }
+
     private void delete(Rq rq, String cmd) throws IOException {
         int deleteId = 0;
         if(cmd.equals("삭제")) {
-            System.out.println("삭제할 ID를 입력해주세요.");
+            System.out.print("삭제할 ID를 입력해주세요. : ");
             deleteId = Integer.parseInt(br.readLine().trim());
         } else {
             deleteId = rq.getIntParam("id", 0);
