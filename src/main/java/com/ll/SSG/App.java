@@ -3,11 +3,14 @@ package com.ll.SSG;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     public void run() throws IOException {
         System.out.println("===== 명언 SSG =====");
 
+        List<WiseSay> wiseSays = new ArrayList<>();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         outer:
@@ -34,6 +37,16 @@ public class App {
                     System.out.println(wiseSay);
 
                     System.out.printf("%d번 명언이 등록되었습니다.\n", wiseSayId);
+                    wiseSays.add(wiseSay);
+                    break;
+
+                case "목록":
+                    System.out.println("번호 / 작가 / 명언");
+                    System.out.println("-------------------");
+                    for (int i = wiseSays.size() - 1; i >= 0; i--) {
+                        WiseSay getWiseSay = wiseSays.get(i);
+                        System.out.printf("%d / %s / %s\n", getWiseSay.id, getWiseSay.content, getWiseSay.author);
+                    }
                     break;
 
                 case "종료":
