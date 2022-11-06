@@ -21,4 +21,8 @@ public class WiseSayRepository {
         }
         return null;
     }
+
+    public void dumpToJson() {
+        wiseSayTable.dumpToJson();
+    }
 }

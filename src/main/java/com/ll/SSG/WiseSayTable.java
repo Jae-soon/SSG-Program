@@ -111,4 +111,15 @@ public class WiseSayTable {
 
         new File(deleteFilePath).delete();
     }
+
+    public void dumpToJson() {
+        List<WiseSay> wiseSays = findAll();
+
+        String json = "[" + wiseSays
+                .stream()
+                .map(wiseSay -> wiseSay.toJson())
+                .collect(Collectors.joining(",")) + "]";
+
+        Util.file.saveToFile(getTableDataDumpFilePath(), json);
+    }
 }
