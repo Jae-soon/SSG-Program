@@ -8,7 +8,7 @@ public class WiseSayService {
     List<WiseSay> wiseSays = new ArrayList<>();
     WiseSayRepository wiseSayRepository = new WiseSayRepository(wiseSays);
     int id = 0;
-    WiseSayTable wiseSayTable = new WiseSayTable(App.getDataBaseDir());
+    WiseSayTable wiseSayTable = new WiseSayTable();
 
     public List<WiseSay> findAll() {
         return wiseSayTable.findAll();
@@ -38,6 +38,6 @@ public class WiseSayService {
                 .map(wiseSay -> wiseSay.toJson())
                 .collect(Collectors.joining(",")) + "]";
 
-        Util.file.saveToFile("%s/data.json".formatted(App.getDataBaseDir()), json);
+        Util.file.saveToFile(WiseSayTable.getTableDataDumpFilePath(), json);
     }
 }

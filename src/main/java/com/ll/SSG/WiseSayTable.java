@@ -8,14 +8,29 @@ import java.util.stream.Collectors;
 public class WiseSayTable {
     private String baseDir;
 
-    public WiseSayTable(String baseDir) {
-        this.baseDir = baseDir;
+    public WiseSayTable() {
+    }
+
+    public static String getTableDataFilePath(int id) {
+        return getTableDirPath() + "/" + id + ".json";
+    }
+
+    public static String getTableLastIdFilePath() {
+        return getTableDirPath() + "/last_id.txt";
+    }
+
+    public static String getTableDataDumpFilePath() {
+        return getTableDirPath() + "/data.json";
+    }
+
+    public static String getTableDirPath() {
+        return App.getDataBaseDir() + "/wise_say";
     }
 
     public void save(WiseSay wiseSay) {
-        Util.file.mkdir("%s/wise_say".formatted(baseDir));
+        Util.file.mkdir(getTableDirPath());
         String body = wiseSay.toJson();
-        Util.file.saveToFile("%s/wise_say/%d.json".formatted(baseDir, wiseSay.id), body);
+        Util.file.saveToFile(getTableDataFilePath(wiseSay.id), body);
     }
 
     public WiseSay save(String content, String author) {
@@ -37,11 +52,11 @@ public class WiseSayTable {
     }
 
     private void saveLastId(int id) {
-        Util.file.saveToFile("%s/wise_say/last_id.txt".formatted(baseDir), id + "");
+        Util.file.saveToFile(getTableLastIdFilePath(), id + "");
     }
 
     public  int getLastId() {
-        String lastId = Util.file.readFromFile("%s/wise_say/last_id.txt".formatted(baseDir), "");
+        String lastId = Util.file.readFromFile(getTableLastIdFilePath(), "");
 
         if (lastId.isEmpty()) {
             return 0;
@@ -51,7 +66,7 @@ public class WiseSayTable {
     }
 
     public WiseSay findById(int id) {
-        String path = "%s/wise_say/%d.json".formatted(baseDir, id);
+        String path = getTableDataFilePath(id);
 
         if (new File(path).exists() == false) {
             return null;
@@ -76,12 +91,14 @@ public class WiseSayTable {
     }
 
     private List<Integer> getFileIds() {
-        String path = "%s/wise_say".formatted(baseDir);
+        String path = getTableDirPath();
         List<String> fileNames = Util.file.getFileNamesFromDir(path);
 
         return fileNames
                 .stream()
                 .filter(fileName -> !fileName.equals("last_id.txt"))
+                .filter(fileName -> !fileName.equals("data.json")) // 영상에는 이 부분이 빠져있습니다. 꼭 추가해주세요.
+                .filter(fileName -> fileName.endsWith(".json"))
                 .map(fileName -> fileName.replace(".json", ""))
                 .mapToInt(Integer::parseInt)
                 .boxed()
@@ -89,7 +106,14 @@ public class WiseSayTable {
     }
 
     public void removeById(int id) {
-        String deleteFilePath = "%s/wise_say/%d.json".formatted(baseDir, id);
+        String deleteFilePath = getTableDataFilePath(id);
+
+        File file = new File(deleteFilePath);
+
+        if(!file.exists()) {
+            System.out.println("해당 ID가 존재하지 않습니다.");
+            return;
+        }
 
         new File(deleteFilePath).delete();
     }

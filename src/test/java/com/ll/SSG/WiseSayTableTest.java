@@ -17,7 +17,7 @@ public class WiseSayTableTest {
     @BeforeAll
     public void beforeAll() {
         App.setMode("test");
-        wiseSayTable = new WiseSayTable(App.getDataBaseDir());
+        wiseSayTable = new WiseSayTable();
     }
 
     @BeforeEach
