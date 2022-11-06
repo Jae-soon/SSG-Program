@@ -7,9 +7,10 @@ public class WiseSayService {
     List<WiseSay> wiseSays = new ArrayList<>();
     WiseSayRepository wiseSayRepository = new WiseSayRepository(wiseSays);
     int id = 0;
+    WiseSayTable wiseSayTable = new WiseSayTable(App.getBaseDir());
 
     public List<WiseSay> findAll() {
-        return wiseSayRepository.findAll();
+        return wiseSayTable.findAll();
     }
 
     public WiseSay findById(int id) {
@@ -17,20 +18,14 @@ public class WiseSayService {
     }
 
     public WiseSay write(String content, String author) {
-        int wiseSayId = ++id;
-
-        WiseSay wiseSay = new WiseSay(wiseSayId, content, author);
-
-        wiseSays.add(wiseSay);
-        return wiseSay;
+        return wiseSayTable.save(content, author);
     }
 
-    public void remove(WiseSay wiseSay) {
-        wiseSays.remove(wiseSay);
+    public void remove(int id) {
+        wiseSayTable.removeById(id);
     }
 
-    public void modify(WiseSay wiseSay, String content, String author) {
-        wiseSay.content = content;
-        wiseSay.author = author;
+    public WiseSay modify(int id, String content, String author) {
+        return wiseSayTable.save(id, content, author);
     }
 }

@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
+    public static String mode = "prod";
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    public static String getBaseDir() {
+        return mode + "_data";
+    }
 
     public void run() throws IOException {
         System.out.println("===== 명언 SSG =====");

@@ -18,13 +18,22 @@ public class WiseSayTable {
         Util.file.saveToFile("%s/wise_say/%d.json".formatted(baseDir, wiseSay.id), body);
     }
 
-    public void save(String content, String author) {
+    public WiseSay save(String content, String author) {
         int id = getLastId() + 1;
 
         WiseSay wiseSay = new WiseSay(id, content, author);
         save(wiseSay);
 
         saveLastId(id);
+
+        return wiseSay;
+    }
+
+    public WiseSay save(int id, String content, String author) {
+        WiseSay wiseSay = new WiseSay(id, content, author);
+        save(wiseSay);
+
+        return wiseSay;
     }
 
     private void saveLastId(int id) {

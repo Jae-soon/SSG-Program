@@ -8,6 +8,7 @@ import java.util.List;
 public class WiseSayController {
     BufferedReader br;
     WiseSayService wiseSayService = new WiseSayService();
+    WiseSayTable wiseSayTable = new WiseSayTable(App.getBaseDir());
 
     public WiseSayController(BufferedReader br) {
         this.br = br;
@@ -33,7 +34,7 @@ public class WiseSayController {
             return;
         }
 
-        WiseSay wiseSay = wiseSayService.findById(wiseSayId);
+        WiseSay wiseSay = wiseSayTable.findById(wiseSayId);
 
         if(wiseSay == null) {
             System.out.println("해당 ID의 명언이 존재하지 않습니다.");
@@ -48,7 +49,7 @@ public class WiseSayController {
         System.out.print("변경 작가 : ");
         String author = br.readLine().trim();
 
-        wiseSayService.modify(wiseSay, content, author);
+        wiseSayService.modify(wiseSayId, content, author);
 
         System.out.printf("%d번 명언이 수정되었습니다.", wiseSayId);
     }
@@ -73,7 +74,7 @@ public class WiseSayController {
             return;
         }
 
-        WiseSay wiseSay = wiseSayService.findById(wiseSayId);
+        WiseSay wiseSay = wiseSayTable.findById(wiseSayId);
 
         if(wiseSay == null) {
             System.out.println("해당 ID의 명언이 존재하지 않습니다.");
@@ -102,14 +103,7 @@ public class WiseSayController {
             return;
         }
 
-        WiseSay wiseSay = wiseSayService.findById(deleteId);
-
-        if(wiseSay == null) {
-            System.out.println("해당 ID의 명언이 존재하지 않습니다.");
-            return;
-        }
-
-        wiseSayService.remove(wiseSay);
+        wiseSayService.remove(deleteId);
 
         System.out.printf("%d번 명언이 삭제되었습니다.\n", deleteId);
     }
