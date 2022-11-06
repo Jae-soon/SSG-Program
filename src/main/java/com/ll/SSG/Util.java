@@ -116,5 +116,23 @@ public class Util {
                 return new ArrayList<>();
             }
         }
+
+        public static void saveNoToFile(String path, int no) {
+            saveToFile(path, no + "");
+        }
+
+        public static int readNoFromFile(String path, int defaultValue) {
+            String lastId = Util.file.readFromFile(path, "");
+
+            if (lastId.isEmpty()) {
+                return defaultValue;
+            }
+
+            try {
+                return Integer.parseInt(lastId);
+            } catch (NumberFormatException e) {
+                return defaultValue;
+            }
+        }
     }
 }
