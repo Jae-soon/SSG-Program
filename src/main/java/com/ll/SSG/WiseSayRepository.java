@@ -4,7 +4,7 @@ import java.util.List;
 
 public class WiseSayRepository {
     List<WiseSay> wiseSays;
-    WiseSayTable wiseSayTable = new WiseSayTable(App.getBaseDir());
+    WiseSayTable wiseSayTable = new WiseSayTable(App.getDataBaseDir());
 
     public WiseSayRepository(List<WiseSay> wiseSays) {
         this.wiseSays = wiseSays;

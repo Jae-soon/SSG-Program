@@ -8,7 +8,7 @@ import java.util.List;
 public class WiseSayController {
     BufferedReader br;
     WiseSayService wiseSayService = new WiseSayService();
-    WiseSayTable wiseSayTable = new WiseSayTable(App.getBaseDir());
+    WiseSayTable wiseSayTable = new WiseSayTable(App.getDataBaseDir());
 
     public WiseSayController(BufferedReader br) {
         this.br = br;

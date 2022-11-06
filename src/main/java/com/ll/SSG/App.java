@@ -7,11 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
-    public static String mode = "prod";
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static String mode = "prod";
+    BufferedReader br;
 
-    public static String getBaseDir() {
+    public App(BufferedReader br) {
+        this.br = br;
+    }
+
+    public static String getDataBaseDir() {
         return mode + "_data";
+    }
+
+    public static void setMode(String mode) {
+        App.mode = mode;
     }
 
     public void run() throws IOException {

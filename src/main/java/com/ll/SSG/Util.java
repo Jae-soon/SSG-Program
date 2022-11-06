@@ -47,6 +47,8 @@ public class Util {
 
     public static class file {
         public static void saveToFile(String path, String body) {
+            new File(path).delete();
+
             try (RandomAccessFile stream = new RandomAccessFile(path, "rw");
                 FileChannel channel = stream.getChannel()) {
                 byte[] strBytes = body.getBytes();
