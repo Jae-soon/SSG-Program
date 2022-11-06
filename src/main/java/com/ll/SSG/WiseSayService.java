@@ -2,6 +2,7 @@ package com.ll.SSG;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WiseSayService {
     List<WiseSay> wiseSays = new ArrayList<>();
@@ -27,5 +28,16 @@ public class WiseSayService {
 
     public WiseSay modify(int id, String content, String author) {
         return wiseSayTable.save(id, content, author);
+    }
+
+    public void dumpToJson() {
+        List<WiseSay> wiseSays = wiseSayRepository.findAll();
+
+        String json = "[" + wiseSays
+                .stream()
+                .map(wiseSay -> wiseSay.toJson())
+                .collect(Collectors.joining(",")) + "]";
+
+        Util.file.saveToFile("%s/data.json".formatted(App.getBaseDir()), json);
     }
 }

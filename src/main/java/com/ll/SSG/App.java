@@ -48,6 +48,10 @@ public class App {
                     wiseSayController.modify(rq, cmd);
                     continue;
 
+                case "빌드":
+                    wiseSayController.build(rq);
+                    break;
+
                 case "종료":
                     break outer;
             }

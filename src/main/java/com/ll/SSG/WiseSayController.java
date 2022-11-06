@@ -132,4 +132,8 @@ public class WiseSayController {
             System.out.printf("%d / %s / %s\n", getWiseSay.id, getWiseSay.content, getWiseSay.author);
         }
     }
+
+    public void build(Rq rq) {
+        wiseSayService.dumpToJson();
+    }
 }
