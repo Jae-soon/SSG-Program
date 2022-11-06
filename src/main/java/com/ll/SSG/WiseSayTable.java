@@ -78,4 +78,10 @@ public class WiseSayTable {
                 .boxed()
                 .collect(Collectors.toList());
     }
+
+    public void removeById(int id) {
+        String deleteFilePath = "%s/wise_say/%d.json".formatted(baseDir, id);
+
+        new File(deleteFilePath).delete();
+    }
 }
